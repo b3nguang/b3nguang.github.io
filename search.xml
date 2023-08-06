@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>首届“陇剑杯”网络安全大赛_wifi</title>
+      <link href="/posts/7b422c0e.html"/>
+      <url>/posts/7b422c0e.html</url>
+      
+        <content type="html"><![CDATA[<p>原题如下：</p><p>网管小王最近喜欢上了ctf网络安全竞赛，他使用“哥斯拉”木引进玩玩upload-labs ，并且保存了内存镜像、 wifi和服务器流量，让您来分析后作答：（本题仅1小问）<br>小王往upload-labs上传木马后进行了cat &#x2F;flag，flag内容为__。</p><h2 id="检材"><a href="#检材" class="headerlink" title="检材"></a>检材</h2><p>服务器.pcap</p><p>客户端.cap</p><p>Windows 7-dde00fa9.vmem</p><h2 id="wp"><a href="#wp" class="headerlink" title="wp"></a>wp</h2><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230806225418962.png" alt="image-20230806225418962"></p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230806225437666.png" alt="image-20230806225437666"></p><p>根据客户端流量可知，这是一个哥斯拉的php_eval_xor_base64的马，可以把哥斯拉一把梭的脚本先准备好</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> gzip</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encode</span>(<span class="params">D, K</span>):</span><br><span class="line">    D = <span class="built_in">list</span>(D)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(D)):</span><br><span class="line">        c = K[i + <span class="number">1</span> &amp; <span class="number">15</span>]</span><br><span class="line">        D[i] = D[i] ^ c</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">bytes</span>(D)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">key = <span class="string">b&quot;3c6e0b8a9c15224a&quot;</span></span><br><span class="line">cipher_text = <span class="string">&quot;&quot;</span>[<span class="number">16</span>:-<span class="number">16</span>]</span><br><span class="line"><span class="comment"># cipher_text = &quot;&quot;</span></span><br><span class="line"></span><br><span class="line">out = encode(base64.b64decode(cipher_text), key)</span><br><span class="line"><span class="built_in">print</span>(gzip.decompress(out))</span><br></pre></td></tr></table></figure><p>根据服务端流量可知，这是一个被加密过的wifi流量，wifi名为My_Wifi，解密的途径应该是通过分析内存镜像</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230806225824034.png" alt="image-20230806225824034"></p><p>梳理完成，下面分析内存</p><p>我们使用的windows会保存我们使用的wifi的密码</p><p><a href="https://support.hp.com/tw-zh/document/c00217878">HP 电脑 - Windows 10 如何查看无线 (WIFI) 密码 | HP®顧客支援</a></p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230806230300678.png" alt="image-20230806230300678"></p><p>或者使用cmd查看</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netsh wlan show profiles</span><br><span class="line">netsh wlan show profile name=&quot;yourWifiName&quot; key=clear</span><br></pre></td></tr></table></figure><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230806230430657.png" alt="image-20230806230430657"></p><p><a href="https://zhidao.baidu.com/question/2138025629816311908.html">无线密码保存在电脑哪个文件_百度知道 (baidu.com)</a></p><p>因此我们有了大概搜文件的方向</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230806230624169.png" alt="image-20230806230624169"></p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230806230633863.png" alt="image-20230806230633863"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vol3 -f Windows\ 7-dde00fa9.vmem dumpfiles --physaddr 0x3fdc38c8</span><br></pre></td></tr></table></figure><p>将文件dump出来</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230806230723516.png" alt="image-20230806230723516"></p><p>根据上面的内容我们也可以知道wifi的GUID{529B7D2A-05D1-4F21-A001-8F4FF817FC3A}</p><p>在xml中得到wifi密码</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230806230839243.png" alt="image-20230806230839243"></p><p>根据wifi名，和wifi密码，我们可以对流量进行一个解密</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230806230919488.png" alt="image-20230806230919488"></p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230806230926949.png" alt="image-20230806230926949"></p><p>经过过滤分析，发现了四个哥斯拉的返回包</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230806231025919.png" alt="image-20230806231025919"></p><p>对其一一解密，在最后一个包中得到flag</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> gzip</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encode</span>(<span class="params">D, K</span>):</span><br><span class="line">    D = <span class="built_in">list</span>(D)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(D)):</span><br><span class="line">        c = K[i + <span class="number">1</span> &amp; <span class="number">15</span>]</span><br><span class="line">        D[i] = D[i] ^ c</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">bytes</span>(D)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">key = <span class="string">b&quot;3c6e0b8a9c15224a&quot;</span></span><br><span class="line">cipher_text = <span class="string">&quot;72a9c691ccdaab98fL1tMGI4YTljMn75e3jOBS5/V31Qd1NxKQMCe3h4KwFQfVAEVworCi0FfgB+BlWZhjRlQuTIIB5jMTU=b4c4e1f6ddd2a488&quot;</span>[<span class="number">16</span>:-<span class="number">16</span>]</span><br><span class="line"><span class="comment"># cipher_text = &quot;&quot;</span></span><br><span class="line"></span><br><span class="line">out = encode(base64.b64decode(cipher_text), key)</span><br><span class="line"><span class="built_in">print</span>(gzip.decompress(out))</span><br><span class="line"></span><br><span class="line"><span class="comment">#b&#x27;flag&#123;5db5b7b0bb74babb66e1522f3a6b1b12&#125;\n&#x27;</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Writeup </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CTF </tag>
+            
+            <tag> 电子取证 </tag>
+            
+            <tag> 流量 </tag>
+            
+            <tag> webshell </tag>
+            
+            <tag> 哥斯拉 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>2022蓝帽杯初赛_domainhacker</title>
       <link href="/posts/2b5ae3dd.html"/>
       <url>/posts/2b5ae3dd.html</url>
@@ -27,6 +60,8 @@
             <tag> 流量 </tag>
             
             <tag> webshell </tag>
+            
+            <tag> 蚁剑 </tag>
             
         </tags>
       
