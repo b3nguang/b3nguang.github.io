@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>金山WPS_RCE复现(0day)</title>
+      <link href="/posts/3d35a9d4.html"/>
+      <url>/posts/3d35a9d4.html</url>
+      
+        <content type="html"><![CDATA[<p>wps影响范围为：WPS Office 2023 个人版 &lt; 11.1.0.15120</p><p>WPS Office 2019 企业版 &lt; 11.8.2.12085</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">链接: https://pan.baidu.com/s/1TgXFkq1jvgVP6CIzIJbsaA?pwd=jmc1 提取码: jmc1 复制这段内容后打开百度网盘手机App，操作更方便哦</span><br></pre></td></tr></table></figure><p>安装wps，版本为12300</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230809212925246.png" alt="image-20230809212925246"></p><p>更改hosts</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 clientweb.docer.wps.cn.cloudwps.cn</span><br></pre></td></tr></table></figure><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230809213033781.png" alt="image-20230809213033781"></p><p>在<strong>poc目录下</strong>运行监听服务</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230809213227417.png" alt="image-20230809213227417"></p><p>打开poc.html</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230809213310267.png" alt="image-20230809213310267"></p><p>成功复现</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 漏洞复现 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 渗透 </tag>
+            
+            <tag> RCE </tag>
+            
+            <tag> 复现 </tag>
+            
+            <tag> 0day </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>2023数字中国·数据安全产业人才能力挑战赛初赛_Beyond</title>
       <link href="/posts/b1832bfb.html"/>
       <url>/posts/b1832bfb.html</url>
