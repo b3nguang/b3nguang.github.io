@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>2023年首届盘古石杯全国电子数据取证大赛技能赛决赛(流量部分)</title>
+      <link href="/posts/fe8bb709.html"/>
+      <url>/posts/fe8bb709.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="2023年首届盘古石杯全国电子数据取证大赛技能赛决赛-流量部分"><a href="#2023年首届盘古石杯全国电子数据取证大赛技能赛决赛-流量部分" class="headerlink" title="2023年首届盘古石杯全国电子数据取证大赛技能赛决赛(流量部分)"></a>2023年首届盘古石杯全国电子数据取证大赛技能赛决赛(流量部分)</h1><h2 id="1、计算流量包文件的SHA256值是？-答案：字母小写-★☆☆☆☆"><a href="#1、计算流量包文件的SHA256值是？-答案：字母小写-★☆☆☆☆" class="headerlink" title="1、计算流量包文件的SHA256值是？[答案：字母小写][★☆☆☆☆]"></a>1、计算流量包文件的SHA256值是？[答案：字母小写][★☆☆☆☆]</h2><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813171047982.png" alt="image-20230813171047982"></p><h2 id="2、流量包长度在“640-1279”之间的的数据包总共有多少？-答案：100-★☆☆☆☆"><a href="#2、流量包长度在“640-1279”之间的的数据包总共有多少？-答案：100-★☆☆☆☆" class="headerlink" title="2、流量包长度在“640-1279”之间的的数据包总共有多少？[答案：100][★☆☆☆☆]"></a>2、流量包长度在“640-1279”之间的的数据包总共有多少？[答案：100][★☆☆☆☆]</h2><p>陇剑杯考点，拿到手先解密</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813171213134.png" alt="image-20230813171213134"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(frame.len &gt;= 640)&amp;&amp;(frame.len &lt;= 1279)</span><br></pre></td></tr></table></figure><p>或者</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813214513886.png" alt="image-20230813214513886"></p><h2 id="3、黑客使用的计算机操作系统是？-答案：windows7-x32-★★☆☆☆"><a href="#3、黑客使用的计算机操作系统是？-答案：windows7-x32-★★☆☆☆" class="headerlink" title="3、黑客使用的计算机操作系统是？[答案：windows7 x32][★★☆☆☆]"></a>3、黑客使用的计算机操作系统是？[答案：windows7 x32][★★☆☆☆]</h2><p>做这类题我喜欢先把流量大致过一遍</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http and urlencoded-form</span><br><span class="line">http.response.code!=404 and data-text-lines</span><br></pre></td></tr></table></figure><p>这样筛一遍，有特征最好，没有特征也问题不大</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813200002998.png" alt="image-20230813200002998"></p><p>黑客的ip应该是192.168.100.141</p><p>计算机操作系统跟UA相关，随便追踪一个</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813185050093.png" alt="image-20230813185050093"></p><h2 id="4、黑客上传文件到哪个网盘？-答案：xx网盘-★★☆☆☆"><a href="#4、黑客上传文件到哪个网盘？-答案：xx网盘-★★☆☆☆" class="headerlink" title="4、黑客上传文件到哪个网盘？[答案：xx网盘][★★☆☆☆]"></a>4、黑客上传文件到哪个网盘？[答案：xx网盘][★★☆☆☆]</h2><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813185133903.png" alt="image-20230813185133903"></p><p>明显百度网盘，如果你会用科来的话直接一把梭了</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813190842279.png" alt="image-20230813190842279"></p><h2 id="5、黑客上传网盘的中间件是？-答案：xxxx-★★☆☆☆"><a href="#5、黑客上传网盘的中间件是？-答案：xxxx-★★☆☆☆" class="headerlink" title="5、黑客上传网盘的中间件是？[答案：xxxx][★★☆☆☆]"></a>5、黑客上传网盘的中间件是？[答案：xxxx][★★☆☆☆]</h2><p>了解一点linux加固的知识就知道，响应头里会暴露中间件的信息</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813185246542.png" alt="image-20230813185246542"></p><h2 id="6、黑客首次登陆网盘时间是？-答案：2000-01-01-01-00-33-★★☆☆☆"><a href="#6、黑客首次登陆网盘时间是？-答案：2000-01-01-01-00-33-★★☆☆☆" class="headerlink" title="6、黑客首次登陆网盘时间是？[答案：2000-01-01 01:00:33][★★☆☆☆]"></a>6、黑客首次登陆网盘时间是？[答案：2000-01-01 01:00:33][★★☆☆☆]</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http contains &quot;pan.baidu.com&quot; &amp;&amp; http.request.method==&quot;POST&quot;</span><br></pre></td></tr></table></figure><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813185627193.png" alt="image-20230813185627193"></p><h2 id="7、黑客上传到网盘的txt文件的md5值是？-答案：字母小写-★★★☆☆"><a href="#7、黑客上传到网盘的txt文件的md5值是？-答案：字母小写-★★★☆☆" class="headerlink" title="7、黑客上传到网盘的txt文件的md5值是？[答案：字母小写][★★★☆☆]"></a>7、黑客上传到网盘的txt文件的md5值是？[答案：字母小写][★★★☆☆]</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http and urlencoded-form</span><br></pre></td></tr></table></figure><p>前面的大致浏览就发挥了作用，看见过传输了什么文件</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813185815430.png" alt="image-20230813185815430"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http contains &quot;dic.txt&quot;</span><br></pre></td></tr></table></figure><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813190051747.png" alt="image-20230813190051747"></p><h2 id="8、黑客上传到网盘的txt文件第8行的内容是？-答案：XXX-★★★☆☆☆"><a href="#8、黑客上传到网盘的txt文件第8行的内容是？-答案：XXX-★★★☆☆☆" class="headerlink" title="8、黑客上传到网盘的txt文件第8行的内容是？[答案：XXX][★★★☆☆☆]"></a>8、黑客上传到网盘的txt文件第8行的内容是？[答案：XXX][★★★☆☆☆]</h2><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813190139086.png" alt="image-20230813190139086"></p><p>请求体和请求头之间只空一行，所以是$$</p><h2 id="9、被入侵主机的计算机名是？-答案：XXXXXXXXXXX-★★★☆☆"><a href="#9、被入侵主机的计算机名是？-答案：XXXXXXXXXXX-★★★☆☆" class="headerlink" title="9、被入侵主机的计算机名是？[答案：XXXXXXXXXXX][★★★☆☆]"></a>9、被入侵主机的计算机名是？[答案：XXXXXXXXXXX][★★★☆☆]</h2><p>做到这里我其实不是很了解被入侵主机是哪一台，但是做到后面ftp的时候明了了</p><h2 id="10、被入侵电脑的数据回传端口是？-答案：11-★★★☆☆"><a href="#10、被入侵电脑的数据回传端口是？-答案：11-★★★☆☆" class="headerlink" title="10、被入侵电脑的数据回传端口是？[答案：11][★★★☆☆]"></a>10、被入侵电脑的数据回传端口是？[答案：11][★★★☆☆]</h2><p>见后</p><h2 id="11、流量包中ftp服务器的用户密码是？-答案：abcd-★★☆☆☆"><a href="#11、流量包中ftp服务器的用户密码是？-答案：abcd-★★☆☆☆" class="headerlink" title="11、流量包中ftp服务器的用户密码是？[答案：abcd][★★☆☆☆]"></a>11、流量包中ftp服务器的用户密码是？[答案：abcd][★★☆☆☆]</h2><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813215329453.png" alt="image-20230813215329453"></p><p>算登录成功那次，是ftp</p><h2 id="12、流量包中ftp服务器中的木马文件的md5值是？-答案：字母小写-★★☆☆☆"><a href="#12、流量包中ftp服务器中的木马文件的md5值是？-答案：字母小写-★★☆☆☆" class="headerlink" title="12、流量包中ftp服务器中的木马文件的md5值是？[答案：字母小写][★★☆☆☆]"></a>12、流量包中ftp服务器中的木马文件的md5值是？[答案：字母小写][★★☆☆☆]</h2><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813215512930.png" alt="image-20230813215512930"></p><p>木马是setup.exe，追踪一下</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813215631311.png" alt="image-20230813215631311"></p><p>PE文件的特征</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813215720124.png" alt="image-20230813215720124"></p><p>保存完直接给我杀了……</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813215843283.png" alt="image-20230813215843283"></p><p>网安一哥的图标，难崩</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813215928393.png" alt="image-20230813215928393"></p><h2 id="13、木马文件伪造的软件版本是？-答案：0-0-0-0-★★☆☆☆"><a href="#13、木马文件伪造的软件版本是？-答案：0-0-0-0-★★☆☆☆" class="headerlink" title="13、木马文件伪造的软件版本是？[答案：0.0.0.0][★★☆☆☆]"></a>13、木马文件伪造的软件版本是？[答案：0.0.0.0][★★☆☆☆]</h2><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813215943355.png" alt="image-20230813215943355"></p><p>这时候我们再梳理一下关系</p><p>黑客192.168.100.141通过ftp服务给192.168.100.139传了一个马，要判断主机名，我们可以对192.168.100.139进行一个爆搜</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813221526307.png" alt="image-20230813221526307"></p><p><a href="https://www.cnblogs.com/Wendy-r/p/12679241.html">DHCP完整过程详解及Wireshark抓包分析 - Wendy_r - 博客园 (cnblogs.com)</a></p><p>扔给沙箱，可以发现回连端口</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813221339783.png" alt="image-20230813221339783"></p><h2 id="14、黑客上传到网盘的压缩包解压密码是？-答案：XXXXXXXXXXX-★★★★★"><a href="#14、黑客上传到网盘的压缩包解压密码是？-答案：XXXXXXXXXXX-★★★★★" class="headerlink" title="14、黑客上传到网盘的压缩包解压密码是？[答案：XXXXXXXXXXX][★★★★★]"></a>14、黑客上传到网盘的压缩包解压密码是？[答案：XXXXXXXXXXX][★★★★★]</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http and urlencoded-form</span><br></pre></td></tr></table></figure><p>发现有三个文件上传</p><p>dic.txt pass.jpg flag.rar</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813222247147.png"></p><p>逐一导出，我选择手搓</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813224643363.png" alt="image-20230813224643363"></p><p>痛苦</p><p>一开始我以为是爆破，但是没找到，考虑隐写</p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813230132086.png" alt="image-20230813230132086"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JPG/JPEG:SilentEye, steghide, outguess, jphide, F5-steganography, JSteg, Free File Camouflage, DeEgger Embedder, OurSecret</span><br></pre></td></tr></table></figure><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813230806497.png" alt="image-20230813230806497"></p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813230900681.png" alt="image-20230813230900681"></p><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813230934127.png" alt="image-20230813230934127"></p><h2 id="15、黑客上传到网盘的压缩包内文件的内容是？-答案：xxxxxxx-★★★★★"><a href="#15、黑客上传到网盘的压缩包内文件的内容是？-答案：xxxxxxx-★★★★★" class="headerlink" title="15、黑客上传到网盘的压缩包内文件的内容是？[答案：xxxxxxx][★★★★★]"></a>15、黑客上传到网盘的压缩包内文件的内容是？[答案：xxxxxxx][★★★★★]</h2><p><img src="https://b3nguang.oss-cn-hangzhou.aliyuncs.com/image-20230813230957462.png" alt="image-20230813230957462"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Writeup </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 盘古石杯 </tag>
+            
+            <tag> 电子取证 </tag>
+            
+            <tag> 流量 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>2023年首届盘古石杯全国电子数据取证大赛技能赛决赛(物联网部分)</title>
       <link href="/posts/afd9444.html"/>
       <url>/posts/afd9444.html</url>
@@ -136,9 +165,9 @@
             
             <tag> 电子取证 </tag>
             
-            <tag> CTF </tag>
-            
             <tag> 流量 </tag>
+            
+            <tag> CTF </tag>
             
             <tag> webshell </tag>
             
@@ -169,9 +198,9 @@
             
             <tag> 电子取证 </tag>
             
-            <tag> CTF </tag>
-            
             <tag> 流量 </tag>
+            
+            <tag> CTF </tag>
             
             <tag> webshell </tag>
             
@@ -202,9 +231,9 @@
             
             <tag> 电子取证 </tag>
             
-            <tag> CTF </tag>
-            
             <tag> 流量 </tag>
+            
+            <tag> CTF </tag>
             
             <tag> webshell </tag>
             
