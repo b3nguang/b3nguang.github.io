@@ -6,13 +6,13 @@
 <meta property="og:image" content="http://b3nguang.top/img/profile.jpg">
 <meta property="article:author" content="b3nguang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://b3nguang.top/img/profile.jpg"><link rel="shortcut icon" href="/img/yuanshen.ico"><link rel="canonical" href="http://b3nguang.top/page/2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+<meta name="twitter:image" content="http://b3nguang.top/img/profile.jpg"><link rel="shortcut icon" href="/img/yuanshen.ico"><link rel="canonical" href="http://b3nguang.top/page/2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
   localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -33,11 +33,9 @@
   copyright: {"limitCount":50,"languages":{"author":"作者: b3nguang","link":"链接: ","source":"来源: 本光","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
   lightbox: 'fancybox',
   Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
   },
   isPhotoFigcaption: false,
   islazyload: false,
@@ -53,78 +51,88 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2023-11-27 20:23:47'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
+  postUpdate: '2023-12-13 08:54:53'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
         }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
         }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
 
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
         }
-        return item.value
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
       }
-    }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
       }
-      document.head.appendChild(script)
-    })
-  
-    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = url
-      if (id) link.id = id
-      link.onerror = reject
-      link.onload = link.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        link.onload = link.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(link)
-    })
-  
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
       const asideStatus = saveToLocal.get('aside-status')
       if (asideStatus !== undefined) {
         if (asideStatus === 'hide') {
@@ -134,13 +142,13 @@
         }
       }
     
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
       }
-    }
-    detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/profile.jpg" onerror="onerror=null;src='/img/404yuanshen.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/banner.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="本光"><span class="site-name">本光</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">本光</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/b3nguang" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://blog.csdn.net/weixin_72667582" target="_blank" title="CSDN"><i class="fa fa-book-open"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1127786222&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:benguang04@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/posts/495ede65.html" title="2021JXXZ(服务器部分)"><img class="post-bg" src="/img/2.JPG" onerror="this.onerror=null;this.src='/img/404yuanshen.gif'" alt="2021JXXZ(服务器部分)"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/495ede65.html" title="2021JXXZ(服务器部分)">2021JXXZ(服务器部分)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-08-24T13:21:38.000Z" title="发表于 2023-08-24 21:21:38">2023-08-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Writeup/">Writeup</a></span></div><div class="content">12021年7月12日，上午8点左右，警方接到被害人张某(张有财)报案，声称自己被敲诈数万元；经询问，张某被嫌疑人诱导裸聊，下载了某“裸聊”软件，导致自己的通讯录和裸聊视频被嫌疑人获取，对其进行敲诈，最终张某不堪重负，选择了报警；警方从张某提供的本人手机中（手机号为18805533089），定向采集到了该“裸聊”软件，通个裸聊APK软件的分析，警方找到了后台服务器地址，并调取了服务器镜像（web.E01），请各位取证工作者回答下列问题：
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/profile.jpg" onerror="onerror=null;src='/img/404yuanshen.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/banner.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="本光"><span class="site-name">本光</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">本光</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/b3nguang" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://blog.csdn.net/weixin_72667582" target="_blank" title="CSDN"><i class="fa fa-book-open"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1127786222&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:benguang04@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/495ede65.html" title="2021JXXZ(服务器部分)">2021JXXZ(服务器部分)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-08-24T13:21:38.000Z" title="发表于 2023-08-24 21:21:38">2023-08-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Writeup/">Writeup</a></span></div><div class="content">12021年7月12日，上午8点左右，警方接到被害人张某(张有财)报案，声称自己被敲诈数万元；经询问，张某被嫌疑人诱导裸聊，下载了某“裸聊”软件，导致自己的通讯录和裸聊视频被嫌疑人获取，对其进行敲诈，最终张某不堪重负，选择了报警；警方从张某提供的本人手机中（手机号为18805533089），定向采集到了该“裸聊”软件，通个裸聊APK软件的分析，警方找到了后台服务器地址，并调取了服务器镜像（web.E01），请各位取证工作者回答下列问题：
 
 检材web.E01的操作系统版本是
 检材web.E01中，操作系统的内核版本是
@@ -160,7 +168,7 @@
 
 有www目录，cd进去，宝塔特征
 先关闭宝塔烦人的限制
-1bt 23 &amp;&amp; bt 11 &amp;&amp; bt 12 &amp;&amp; bt  ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/76fb842d.html" title="2022GDBW(服务器部分)"><img class="post-bg" src="/img/1.JPG" onerror="this.onerror=null;this.src='/img/404yuanshen.gif'" alt="2022GDBW(服务器部分)"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/76fb842d.html" title="2022GDBW(服务器部分)">2022GDBW(服务器部分)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-08-24T10:08:42.000Z" title="发表于 2023-08-24 18:08:42">2023-08-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Writeup/">Writeup</a></span></div><div class="content">通过SSH服务第一次登录到服务器上的客户端IP地址为？（标准格式：192.168.1.1）
+1bt 23 &amp;&amp; bt 11 &amp;&amp; bt 12 &amp;&amp; bt  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/76fb842d.html" title="2022GDBW(服务器部分)">2022GDBW(服务器部分)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-08-24T10:08:42.000Z" title="发表于 2023-08-24 18:08:42">2023-08-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Writeup/">Writeup</a></span></div><div class="content">通过SSH服务第一次登录到服务器上的客户端IP地址为？（标准格式：192.168.1.1）
 分析服务器ROOT用户输入的最后一条命令为？（标准格式：good）
 分析虚假发卡网站源码中配置的数据库用户名为？（标准格式：good）下面开始对服务器进行分析
 服务器仿真后，我会用这几个命令大致排查一下
@@ -184,7 +192,7 @@ Shell脚本加密与解密-腾讯云开发者社区-腾讯云 (tencent.com)
 SSH之hosts.allow和hosts.deny文件-腾讯云开发者社区-腾讯云 (tencent.com)
 排查这两个文件
 
-限制ip访问s ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/fe050a85.html" title="2021HBBW(服务器PC部分)"><img class="post-bg" src="/img/3.JPG" onerror="this.onerror=null;this.src='/img/404yuanshen.gif'" alt="2021HBBW(服务器PC部分)"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/fe050a85.html" title="2021HBBW(服务器PC部分)">2021HBBW(服务器PC部分)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-08-21T03:32:50.000Z" title="发表于 2023-08-21 11:32:50">2023-08-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Writeup/">Writeup</a></span></div><div class="content">12021年5月，接某考试信息中心报案称，其单位一存储考生个人信息的服务器疑似被入侵，数据库被破坏并勒索比特币，警方当即固定了服务器的镜像server.e01。经调查警方抓获了嫌疑人并对其使用的笔记本电脑只做了镜像PC.e01，请对两个检材进行分析，并回答下面的问题：
+限制ip访问s ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/fe050a85.html" title="2021HBBW(服务器PC部分)">2021HBBW(服务器PC部分)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-08-21T03:32:50.000Z" title="发表于 2023-08-21 11:32:50">2023-08-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Writeup/">Writeup</a></span></div><div class="content">12021年5月，接某考试信息中心报案称，其单位一存储考生个人信息的服务器疑似被入侵，数据库被破坏并勒索比特币，警方当即固定了服务器的镜像server.e01。经调查警方抓获了嫌疑人并对其使用的笔记本电脑只做了镜像PC.e01，请对两个检材进行分析，并回答下面的问题：
 
 第一部分1. 镜像sever.e01对应的被入侵服务器源盘sha256为98C53B2AC30758EF0977FC313D5D1A070EBF51AE09E0DF36664A5CCF81DF35C5
 
@@ -196,7 +204,7 @@ SSH之hosts.allow和hosts.deny文件-腾讯云开发者社区-腾讯云 (tencent
 后面分析PC时候会出现
 6. 入侵者IP为192.168.232.150last+ifconfig
 
-7. 入侵者首次登录成功时间为15:01:08（14:57:17）（14:59:21）（格式要求：HH:MM:SS，如14:03:27）接下来先不看题目，先分析Linux，再来逐 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/3f69e078.html" title="2022ZJXJ(服务器部分)"><img class="post-bg" src="/img/2.JPG" onerror="this.onerror=null;this.src='/img/404yuanshen.gif'" alt="2022ZJXJ(服务器部分)"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/3f69e078.html" title="2022ZJXJ(服务器部分)">2022ZJXJ(服务器部分)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-08-19T15:51:41.000Z" title="发表于 2023-08-19 23:51:41">2023-08-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Writeup/">Writeup</a></span></div><div class="content">2022ZJXJ(服务器部分)1、Windows服务器镜像1. 首次远程登录到Windows服务器中的客户端IP地址为？（标准格式：192.168.1.1）
+7. 入侵者首次登录成功时间为15:01:08（14:57:17）（14:59:21）（格式要求：HH:MM:SS，如14:03:27）接下来先不看题目，先分析Linux，再来逐 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/3f69e078.html" title="2022ZJXJ(服务器部分)">2022ZJXJ(服务器部分)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-08-19T15:51:41.000Z" title="发表于 2023-08-19 23:51:41">2023-08-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Writeup/">Writeup</a></span></div><div class="content">2022ZJXJ(服务器部分)1、Windows服务器镜像1. 首次远程登录到Windows服务器中的客户端IP地址为？（标准格式：192.168.1.1）
 2. 嫌疑人在Windows服务器上搭建的网站数量为？（标准格式：123）
 3. 分析涉案网站（www.abcbca.top）使用的数据库密码为？（标准格式：1234567）不熟悉这个网站的架构，爆搜了一下
 
@@ -205,7 +213,7 @@ md5解不出来，尝试爆破密码
 
 4. Windows服务器涉案网站（www.abcbca.top）的日志保存路径为？（标准格式：D:\abc\abc）
 
-5. 分析Windows服务器上搭建的每个网站访问日志，统计相同访问IP的数量为？（标准格式：123456）1234567891011121314151617181920212223import osimport retxt_files = [file for file in os.listdir() if file.endswith(&#x27;.log&#x27;)]success_ip = []for file in txt_files:    with open( ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/posts/1fe06f4f.html" title="2022HZWA(流量部分)"><img class="post-bg" src="/img/4.JPG" onerror="this.onerror=null;this.src='/img/404yuanshen.gif'" alt="2022HZWA(流量部分)"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/1fe06f4f.html" title="2022HZWA(流量部分)">2022HZWA(流量部分)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-08-18T12:47:51.000Z" title="发表于 2023-08-18 20:47:51">2023-08-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Writeup/">Writeup</a></span></div><div class="content">通过对流量包attack进行分析，该数据流量包的sha1的是多少？（格式填写小写字母与数字组合 如abc23dedf445）
+5. 分析Windows服务器上搭建的每个网站访问日志，统计相同访问IP的数量为？（标准格式：123456）1234567891011121314151617181920212223import osimport retxt_files = [file for file in os.listdir() if file.endswith(&#x27;.log&#x27;)]success_ip = []for file in txt_files:    with open( ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/1fe06f4f.html" title="2022HZWA(流量部分)">2022HZWA(流量部分)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-08-18T12:47:51.000Z" title="发表于 2023-08-18 20:47:51">2023-08-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Writeup/">Writeup</a></span></div><div class="content">通过对流量包attack进行分析，该数据流量包的sha1的是多少？（格式填写小写字母与数字组合 如abc23dedf445）
 通过对流量包attack进行分析，捕获第一个数据报文的时间是？（格式按年-月-日   填写 如：yyyy-mm-dd 如2000-01-23）
 
 通过对流量包attack进行分析，捕获流量包时使用的接口数量（格式填写数字  如：10）
@@ -217,17 +225,17 @@ md5解不出来，尝试爆破密码
 
 两者结合，看出黑客为192.168.94.59，被攻击方为192.168.32.189
 通过对流量包attack进行分析，得知攻击者IP是多少？（格式数字与.组合填写 如：10.10.1.1）见上
-通过对流量包attack进行分析，得知黑客使用的扫描器是？主流WEB漏洞扫描器种类及其指纹特征分析-腾讯云开发者社区-腾讯云 ( ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/posts/cec7bd6c.html" title="2022HZWA(服务器部分)"><img class="post-bg" src="/img/7.JPG" onerror="this.onerror=null;this.src='/img/404yuanshen.gif'" alt="2022HZWA(服务器部分)"></a></div><div class="recent-post-info"><a class="article-title" href="/posts/cec7bd6c.html" title="2022HZWA(服务器部分)">2022HZWA(服务器部分)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-08-18T12:47:43.000Z" title="发表于 2023-08-18 20:47:43">2023-08-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Writeup/">Writeup</a></span></div><div class="content">通过对小型集群服务器分析，该服务器系统类型是？
+通过对流量包attack进行分析，得知黑客使用的扫描器是？主流WEB漏洞扫描器种类及其指纹特征分析-腾讯云开发者社区-腾讯云 ( ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/posts/cec7bd6c.html" title="2022HZWA(服务器部分)">2022HZWA(服务器部分)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-08-18T12:47:43.000Z" title="发表于 2023-08-18 20:47:43">2023-08-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Writeup/">Writeup</a></span></div><div class="content">通过对小型集群服务器分析，该服务器系统类型是？
 通过对小型集群服务器分析，该服务器系统时区是？
 通过对小型集群服务器分析，该服务器的sshd端口是多少？（答案格式：填写数字  如：10）
-小型集群服务器涉案网站的域名？（答案格式填写小写字母 . 数字组合 如：www.sina.com）12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849[root@localhost nginx]# cat /www/backup/panel/2021-11-24/vhost/nginx/www.huarun.com.conf server&#123;    listen 80;    server_name www.huarun.com;    index index.php index.html index.htm default.php default.htm default.html;    root /www/wwwroot/www.huarun.com;        ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#content-inner">3</a><a class="page-number" href="/page/4/#content-inner">4</a><a class="extend next" rel="next" href="/page/3/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/profile.jpg" onerror="this.onerror=null;this.src='/img/404yuanshen.gif'" alt="avatar"/></div><div class="author-info__name">b3nguang</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/b3nguang"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/b3nguang" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://blog.csdn.net/weixin_72667582" target="_blank" title="CSDN"><i class="fa fa-book-open"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1127786222&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:benguang04@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">原神，启动！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/d64a655f.html" title="2023XZBW-服务器部分"><img src="/img/6.JPG" onerror="this.onerror=null;this.src='/img/404yuanshen.gif'" alt="2023XZBW-服务器部分"/></a><div class="content"><a class="title" href="/posts/d64a655f.html" title="2023XZBW-服务器部分">2023XZBW-服务器部分</a><time datetime="2023-11-27T12:23:22.000Z" title="发表于 2023-11-27 20:23:22">2023-11-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/7afdb9d3.html" title="“美亚杯”第九届全国电子数据取证竞赛(个人赛部分)"><img src="/img/1.JPG" onerror="this.onerror=null;this.src='/img/404yuanshen.gif'" alt="“美亚杯”第九届全国电子数据取证竞赛(个人赛部分)"/></a><div class="content"><a class="title" href="/posts/7afdb9d3.html" title="“美亚杯”第九届全国电子数据取证竞赛(个人赛部分)">“美亚杯”第九届全国电子数据取证竞赛(个人赛部分)</a><time datetime="2023-11-25T04:19:57.000Z" title="发表于 2023-11-25 12:19:57">2023-11-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/cca6f892.html" title="2023HNBW-服务器部分"><img src="/img/4.JPG" onerror="this.onerror=null;this.src='/img/404yuanshen.gif'" alt="2023HNBW-服务器部分"/></a><div class="content"><a class="title" href="/posts/cca6f892.html" title="2023HNBW-服务器部分">2023HNBW-服务器部分</a><time datetime="2023-11-02T07:10:38.000Z" title="发表于 2023-11-02 15:10:38">2023-11-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/54d2ee8c.html" title="2023年第一届龙信杯电子数据取证竞赛"><img src="/img/8.JPG" onerror="this.onerror=null;this.src='/img/404yuanshen.gif'" alt="2023年第一届龙信杯电子数据取证竞赛"/></a><div class="content"><a class="title" href="/posts/54d2ee8c.html" title="2023年第一届龙信杯电子数据取证竞赛">2023年第一届龙信杯电子数据取证竞赛</a><time datetime="2023-09-27T02:28:22.000Z" title="发表于 2023-09-27 10:28:22">2023-09-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/7c70883.html" title="2023蓝帽杯初赛"><img src="/img/8.JPG" onerror="this.onerror=null;this.src='/img/404yuanshen.gif'" alt="2023蓝帽杯初赛"/></a><div class="content"><a class="title" href="/posts/7c70883.html" title="2023蓝帽杯初赛">2023蓝帽杯初赛</a><time datetime="2023-08-29T12:14:20.000Z" title="发表于 2023-08-29 20:14:20">2023-08-29</time></div></div></div></div><div class="card-widget" id="card-newest-comments"><div class="item-headline"><i class="fas fa-comment-dots"></i><span>最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div><div class="card-widget card-categories"><div class="item-headline">
+小型集群服务器涉案网站的域名？（答案格式填写小写字母 . 数字组合 如：www.sina.com）12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849[root@localhost nginx]# cat /www/backup/panel/2021-11-24/vhost/nginx/www.huarun.com.conf server&#123;    listen 80;    server_name www.huarun.com;    index index.php index.html index.htm default.php default.htm default.html;    root /www/wwwroot/www.huarun.com;        ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#content-inner">3</a><a class="page-number" href="/page/4/#content-inner">4</a><a class="extend next" rel="next" href="/page/3/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/profile.jpg" onerror="this.onerror=null;this.src='/img/404yuanshen.gif'" alt="avatar"/></div><div class="author-info__name">b3nguang</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/b3nguang" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://blog.csdn.net/weixin_72667582" target="_blank" title="CSDN"><i class="fa fa-book-open"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=1127786222&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:benguang04@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">原神，启动！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/d64a655f.html" title="2023XZBW-服务器部分">2023XZBW-服务器部分</a><time datetime="2023-11-27T12:23:22.000Z" title="发表于 2023-11-27 20:23:22">2023-11-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/7afdb9d3.html" title="“美亚杯”第九届全国电子数据取证竞赛(个人赛部分)">“美亚杯”第九届全国电子数据取证竞赛(个人赛部分)</a><time datetime="2023-11-25T04:19:57.000Z" title="发表于 2023-11-25 12:19:57">2023-11-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/cca6f892.html" title="2023HNBW-服务器部分">2023HNBW-服务器部分</a><time datetime="2023-11-02T07:10:38.000Z" title="发表于 2023-11-02 15:10:38">2023-11-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/54d2ee8c.html" title="2023年第一届龙信杯电子数据取证竞赛">2023年第一届龙信杯电子数据取证竞赛</a><time datetime="2023-09-27T02:28:22.000Z" title="发表于 2023-09-27 10:28:22">2023-09-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/7c70883.html" title="2023蓝帽杯初赛">2023蓝帽杯初赛</a><time datetime="2023-08-29T12:14:20.000Z" title="发表于 2023-08-29 20:14:20">2023-08-29</time></div></div></div></div><div class="card-widget" id="card-newest-comments"><div class="item-headline"><i class="fas fa-comment-dots"></i><span>最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
             
             </div>
             <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/DIY/"><span class="card-category-list-name">DIY</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Others/"><span class="card-category-list-name">Others</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Writeup/"><span class="card-category-list-name">Writeup</span><span class="card-category-list-count">17</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"><span class="card-category-list-name">漏洞复现</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"><span class="card-category-list-name">环境搭建</span><span class="card-category-list-count">1</span></a></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 1.4em; color: rgb(97, 46, 150)">服务器</a><a href="/tags/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/" style="font-size: 1.45em; color: rgb(156, 106, 53)">电子取证</a><a href="/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/" style="font-size: 1.15em; color: rgb(122, 108, 182)">日志分析</a><a href="/tags/%E6%BA%AF%E6%BA%90/" style="font-size: 1.15em; color: rgb(54, 188, 66)">溯源</a><a href="/tags/PC/" style="font-size: 1.3em; color: rgb(44, 88, 20)">PC</a><a href="/tags/%E6%B5%81%E9%87%8F/" style="font-size: 1.35em; color: rgb(20, 59, 46)">流量</a><a href="/tags/CTF/" style="font-size: 1.25em; color: rgb(61, 159, 57)">CTF</a><a href="/tags/webshell/" style="font-size: 1.25em; color: rgb(191, 32, 106)">webshell</a><a href="/tags/%E8%9A%81%E5%89%91/" style="font-size: 1.15em; color: rgb(92, 55, 20)">蚁剑</a><a href="/tags/%E7%9B%98%E5%8F%A4%E7%9F%B3%E6%9D%AF/" style="font-size: 1.25em; color: rgb(6, 3, 131)">盘古石杯</a><a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/" style="font-size: 1.15em; color: rgb(42, 165, 62)">物联网</a><a href="/tags/IIS/" style="font-size: 1.15em; color: rgb(169, 164, 45)">IIS</a><a href="/tags/%E8%93%9D%E5%B8%BD%E6%9D%AF/" style="font-size: 1.15em; color: rgb(83, 41, 40)">蓝帽杯</a><a href="/tags/%E6%89%8B%E6%9C%BA/" style="font-size: 1.15em; color: rgb(104, 48, 188)">手机</a><a href="/tags/%E5%86%B0%E8%9D%8E/" style="font-size: 1.15em; color: rgb(116, 182, 101)">冰蝎</a><a href="/tags/ELK/" style="font-size: 1.15em; color: rgb(62, 136, 74)">ELK</a><a href="/tags/%E7%A4%BE%E5%B7%A5%E5%BA%93/" style="font-size: 1.15em; color: rgb(103, 120, 147)">社工库</a><a href="/tags/%E9%BE%99%E4%BF%A1%E6%9D%AF/" style="font-size: 1.15em; color: rgb(115, 75, 39)">龙信杯</a><a href="/tags/%E7%A7%BB%E5%8A%A8%E7%BB%88%E7%AB%AF/" style="font-size: 1.2em; color: rgb(107, 147, 199)">移动终端</a><a href="/tags/%E6%B8%97%E9%80%8F/" style="font-size: 1.15em; color: rgb(105, 111, 23)">渗透</a><a href="/tags/RCE/" style="font-size: 1.15em; color: rgb(63, 127, 95)">RCE</a><a href="/tags/0day/" style="font-size: 1.15em; color: rgb(195, 69, 194)">0day</a><a href="/tags/%E5%93%A5%E6%96%AF%E6%8B%89/" style="font-size: 1.15em; color: rgb(3, 168, 153)">哥斯拉</a><a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/" style="font-size: 1.15em; color: rgb(163, 98, 6)">机器人</a><a href="/tags/%E7%BE%8E%E4%BA%9A%E6%9D%AF/" style="font-size: 1.15em; color: rgb(92, 194, 52)">美亚杯</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/09/"><span class="card-archive-list-date">九月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">17</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">21</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2023-01-07T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-11-27T12:23:47.770Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By b3nguang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E6%B5%81%E9%87%8F/" style="font-size: 1.35em; color: rgb(0, 41, 188)">流量</a><a href="/tags/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/" style="font-size: 1.45em; color: rgb(132, 97, 114)">电子取证</a><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 1.4em; color: rgb(95, 185, 183)">服务器</a><a href="/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/" style="font-size: 1.15em; color: rgb(76, 167, 102)">日志分析</a><a href="/tags/%E6%BA%AF%E6%BA%90/" style="font-size: 1.15em; color: rgb(6, 148, 79)">溯源</a><a href="/tags/PC/" style="font-size: 1.3em; color: rgb(111, 80, 81)">PC</a><a href="/tags/IIS/" style="font-size: 1.15em; color: rgb(15, 151, 196)">IIS</a><a href="/tags/CTF/" style="font-size: 1.25em; color: rgb(178, 106, 57)">CTF</a><a href="/tags/webshell/" style="font-size: 1.25em; color: rgb(18, 116, 150)">webshell</a><a href="/tags/%E8%9A%81%E5%89%91/" style="font-size: 1.15em; color: rgb(173, 198, 68)">蚁剑</a><a href="/tags/%E9%BE%99%E4%BF%A1%E6%9D%AF/" style="font-size: 1.15em; color: rgb(98, 182, 65)">龙信杯</a><a href="/tags/%E7%A7%BB%E5%8A%A8%E7%BB%88%E7%AB%AF/" style="font-size: 1.2em; color: rgb(130, 178, 62)">移动终端</a><a href="/tags/%E7%9B%98%E5%8F%A4%E7%9F%B3%E6%9D%AF/" style="font-size: 1.25em; color: rgb(165, 6, 119)">盘古石杯</a><a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/" style="font-size: 1.15em; color: rgb(131, 41, 50)">物联网</a><a href="/tags/ELK/" style="font-size: 1.15em; color: rgb(200, 107, 6)">ELK</a><a href="/tags/%E7%A4%BE%E5%B7%A5%E5%BA%93/" style="font-size: 1.15em; color: rgb(138, 137, 134)">社工库</a><a href="/tags/%E5%86%B0%E8%9D%8E/" style="font-size: 1.15em; color: rgb(18, 101, 31)">冰蝎</a><a href="/tags/%E8%93%9D%E5%B8%BD%E6%9D%AF/" style="font-size: 1.15em; color: rgb(192, 178, 145)">蓝帽杯</a><a href="/tags/%E6%89%8B%E6%9C%BA/" style="font-size: 1.15em; color: rgb(32, 11, 21)">手机</a><a href="/tags/%E6%B8%97%E9%80%8F/" style="font-size: 1.15em; color: rgb(102, 189, 18)">渗透</a><a href="/tags/RCE/" style="font-size: 1.15em; color: rgb(24, 63, 144)">RCE</a><a href="/tags/0day/" style="font-size: 1.15em; color: rgb(159, 170, 149)">0day</a><a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/" style="font-size: 1.15em; color: rgb(87, 100, 81)">机器人</a><a href="/tags/%E5%93%A5%E6%96%AF%E6%8B%89/" style="font-size: 1.15em; color: rgb(35, 145, 100)">哥斯拉</a><a href="/tags/%E7%BE%8E%E4%BA%9A%E6%9D%AF/" style="font-size: 1.15em; color: rgb(46, 180, 28)">美亚杯</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/09/"><span class="card-archive-list-date">九月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">17</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">21</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2023-01-07T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2023-12-13T00:54:52.859Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By b3nguang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
   init: (str) => {
     window.typed = new Typed('#subtitle', Object.assign({
       strings: str,
@@ -300,7 +308,7 @@ typedJSFn.run(subtitleType)</script></div><script src="https://cdn.jsdelivr.net/
     }
 
     let $dom = document.querySelector('#card-newest-comments .aside-list')
-    $dom.innerHTML= result
+    $dom && ($dom.innerHTML= result)
     window.lazyLoadInstance && window.lazyLoadInstance.update()
     window.pjax && window.pjax.refresh($dom)
   }
@@ -350,4 +358,4 @@ typedJSFn.run(subtitleType)</script></div><script src="https://cdn.jsdelivr.net/
 
   newestCommentInit()
   document.addEventListener('pjax:complete', newestCommentInit)
-})</script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="富强,民主,文明,和谐,平等,公正,法治,爱国,敬业,诚信,友善" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
+})</script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
