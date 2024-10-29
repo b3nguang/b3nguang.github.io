@@ -1,7 +1,7 @@
 # Site Information
 title: b3nguang
 description: "一个喜欢开源和折腾的工程师"
-url: https://blog.b3nguang.fun
+url: https://b3nguang.github.io
 repo: b3nguang/b3nguang.github.io
 lang: zh-CN
 timezone: Africa/El_Aaiun
@@ -61,5 +61,5 @@ plugins:
 # Custom Site Settings
 showBuyCoffee: true
 payImage: //b3nguang.oss-cn-hangzhou.aliyuncs.com/static/logo.png
-assetUrl: //blog.b3nguang.top/images/
+assetUrl: //b3nguang.github.io/images/
 defaultImage: data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
