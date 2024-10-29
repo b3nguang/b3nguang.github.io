@@ -1,26 +1,20 @@
 # Site Information
-title: Tw93
+title: b3nguang
 description: "一个喜欢开源和折腾的工程师"
-url: https://tw93.fun
-repo: tw93/tw93.github.io
+url: https://blog.b3nguang.fun
+repo: b3nguang/b3nguang.github.io
 lang: zh-CN
 timezone: Africa/El_Aaiun
 
 # Social Media and External URLs
-github: tw93
-zhihu: tw93
-twitter: HiTw93
-v2ex: tw93
+github: b3nguang
 menu:
   - title: "Categories"
     url: "/categories.html"
   - title: "About"
     url: "/about.html"
   - title: "Weekly"
-    url: "https://weekly.tw93.fun/"
-
-# SEO and Analytics
-google_analytics: G-KS7EDB6BRM
+    url: "https://weekly.b3nguang.top/"
 
 # Build Settings
 paginate: 10
@@ -66,6 +60,6 @@ plugins:
 
 # Custom Site Settings
 showBuyCoffee: true
-payImage: //gw.alipayobjects.com/zos/k/vb/1.png
-assetUrl: //tw93.fun/images/
+payImage: //b3nguang.oss-cn-hangzhou.aliyuncs.com/static/logo.png
+assetUrl: //blog.b3nguang.top/images/
 defaultImage: data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
